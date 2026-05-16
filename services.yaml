@@ -13,6 +13,8 @@ services:
     volumes:
       - ./.config/jellyfin:/config
       - "${MEDIA_ROOT}/videos/Anime:/media/Anime:ro"
+      - "${MEDIA_ROOT}/music:/media/music"
+      - "${MEDIA_ROOT}/Books:/media/Books"
     environment:
       - PUID=1000
       - PGID=1000
