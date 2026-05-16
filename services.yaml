@@ -1,0 +1,27 @@
+# docker-compose.yml - Jellyfin media server
+
+services:
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    restart: unless-stopped
+    ports:
+      - "8096:8096"
+      - "8920:8920"
+      - "7359:7359/udp"
+      - "1900:1900/udp"
+    volumes:
+      - ./.config/jellyfin:/config
+      - "${MEDIA_ROOT}/videos/Anime:/media/Anime:ro"
+    environment:
+      - PUID=1000
+      - PGID=1000
+  kiwix:
+    image: ghcr.io/kiwix/kiwix-serve:latest
+    container_name: kiwix
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    volumes:
+      - ${MEDIA_ROOT}/zims:/data
+    command: "*.zim"
